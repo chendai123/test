@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="demo.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="demo.entity.User" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="avatar" property="avatar" jdbcType="BIGINT" />
+    <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="id_positive_pic" property="idPositivePic" jdbcType="BIGINT" />
+    <result column="id_obverse_pic" property="idObversePic" jdbcType="BIGINT" />
+    <result column="id_expire_time" property="idExpireTime" jdbcType="TIMESTAMP" />
+    <result column="driver_license" property="driverLicense" jdbcType="BIGINT" />
+    <result column="driver_license_duplication" property="driverLicenseDuplication" jdbcType="BIGINT" />
+    <result column="driver_license_docno" property="driverLicenseDocno" jdbcType="VARCHAR" />
+    <result column="driver_license_expire_time" property="driverLicenseExpireTime" jdbcType="TIMESTAMP" />
+    <result column="is_own_vehicle" property="isOwnVehicle" jdbcType="INTEGER" />
+    <result column="certification_status" property="certificationStatus" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="freeze_balance" property="freezeBalance" jdbcType="DECIMAL" />
+    <result column="total_commission" property="totalCommission" jdbcType="DECIMAL" />
+    <result column="invent_code_hash" property="inventCodeHash" jdbcType="CHAR" />
+    <result column="qrcode" property="qrcode" jdbcType="BIGINT" />
+    <result column="is_recommend" property="isRecommend" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="INTEGER" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, mobile, nick_name, real_name, gender, grade, avatar, id_number, id_positive_pic, 
+    id_obverse_pic, id_expire_time, driver_license, driver_license_duplication, driver_license_docno, 
+    driver_license_expire_time, is_own_vehicle, certification_status, balance, freeze_balance, 
+    total_commission, invent_code_hash, qrcode, is_recommend, source, is_delete, create_user, 
+    create_time, update_user, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="demo.entity.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="start !=null and length!=null and length!=-1" >
+      limit ${start},${length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="demo.entity.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="demo.entity.User" useGeneratedKeys="true" keyProperty="userId" >
+    insert into user (mobile, nick_name, real_name, 
+      gender, grade, avatar, 
+      id_number, id_positive_pic, id_obverse_pic, 
+      id_expire_time, driver_license, driver_license_duplication, 
+      driver_license_docno, driver_license_expire_time, 
+      is_own_vehicle, certification_status, balance, 
+      freeze_balance, total_commission, invent_code_hash, 
+      qrcode, is_recommend, source, 
+      is_delete, create_user, create_time, 
+      update_user, update_time)
+    values (#{mobile,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, #{avatar,jdbcType=BIGINT}, 
+      #{idNumber,jdbcType=VARCHAR}, #{idPositivePic,jdbcType=BIGINT}, #{idObversePic,jdbcType=BIGINT}, 
+      #{idExpireTime,jdbcType=TIMESTAMP}, #{driverLicense,jdbcType=BIGINT}, #{driverLicenseDuplication,jdbcType=BIGINT}, 
+      #{driverLicenseDocno,jdbcType=VARCHAR}, #{driverLicenseExpireTime,jdbcType=TIMESTAMP}, 
+      #{isOwnVehicle,jdbcType=INTEGER}, #{certificationStatus,jdbcType=INTEGER}, #{balance,jdbcType=DECIMAL}, 
+      #{freezeBalance,jdbcType=DECIMAL}, #{totalCommission,jdbcType=DECIMAL}, #{inventCodeHash,jdbcType=CHAR}, 
+      #{qrcode,jdbcType=BIGINT}, #{isRecommend,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="demo.entity.User" useGeneratedKeys="true" keyProperty="userId" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="idPositivePic != null" >
+        id_positive_pic,
+      </if>
+      <if test="idObversePic != null" >
+        id_obverse_pic,
+      </if>
+      <if test="idExpireTime != null" >
+        id_expire_time,
+      </if>
+      <if test="driverLicense != null" >
+        driver_license,
+      </if>
+      <if test="driverLicenseDuplication != null" >
+        driver_license_duplication,
+      </if>
+      <if test="driverLicenseDocno != null" >
+        driver_license_docno,
+      </if>
+      <if test="driverLicenseExpireTime != null" >
+        driver_license_expire_time,
+      </if>
+      <if test="isOwnVehicle != null" >
+        is_own_vehicle,
+      </if>
+      <if test="certificationStatus != null" >
+        certification_status,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="freezeBalance != null" >
+        freeze_balance,
+      </if>
+      <if test="totalCommission != null" >
+        total_commission,
+      </if>
+      <if test="inventCodeHash != null" >
+        invent_code_hash,
+      </if>
+      <if test="qrcode != null" >
+        qrcode,
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=BIGINT},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idPositivePic != null" >
+        #{idPositivePic,jdbcType=BIGINT},
+      </if>
+      <if test="idObversePic != null" >
+        #{idObversePic,jdbcType=BIGINT},
+      </if>
+      <if test="idExpireTime != null" >
+        #{idExpireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="driverLicense != null" >
+        #{driverLicense,jdbcType=BIGINT},
+      </if>
+      <if test="driverLicenseDuplication != null" >
+        #{driverLicenseDuplication,jdbcType=BIGINT},
+      </if>
+      <if test="driverLicenseDocno != null" >
+        #{driverLicenseDocno,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseExpireTime != null" >
+        #{driverLicenseExpireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOwnVehicle != null" >
+        #{isOwnVehicle,jdbcType=INTEGER},
+      </if>
+      <if test="certificationStatus != null" >
+        #{certificationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeBalance != null" >
+        #{freezeBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCommission != null" >
+        #{totalCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="inventCodeHash != null" >
+        #{inventCodeHash,jdbcType=CHAR},
+      </if>
+      <if test="qrcode != null" >
+        #{qrcode,jdbcType=BIGINT},
+      </if>
+      <if test="isRecommend != null" >
+        #{isRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="demo.entity.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null" >
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realName != null" >
+        real_name = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.avatar != null" >
+        avatar = #{record.avatar,jdbcType=BIGINT},
+      </if>
+      <if test="record.idNumber != null" >
+        id_number = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idPositivePic != null" >
+        id_positive_pic = #{record.idPositivePic,jdbcType=BIGINT},
+      </if>
+      <if test="record.idObversePic != null" >
+        id_obverse_pic = #{record.idObversePic,jdbcType=BIGINT},
+      </if>
+      <if test="record.idExpireTime != null" >
+        id_expire_time = #{record.idExpireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.driverLicense != null" >
+        driver_license = #{record.driverLicense,jdbcType=BIGINT},
+      </if>
+      <if test="record.driverLicenseDuplication != null" >
+        driver_license_duplication = #{record.driverLicenseDuplication,jdbcType=BIGINT},
+      </if>
+      <if test="record.driverLicenseDocno != null" >
+        driver_license_docno = #{record.driverLicenseDocno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverLicenseExpireTime != null" >
+        driver_license_expire_time = #{record.driverLicenseExpireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isOwnVehicle != null" >
+        is_own_vehicle = #{record.isOwnVehicle,jdbcType=INTEGER},
+      </if>
+      <if test="record.certificationStatus != null" >
+        certification_status = #{record.certificationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.freezeBalance != null" >
+        freeze_balance = #{record.freezeBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalCommission != null" >
+        total_commission = #{record.totalCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="record.inventCodeHash != null" >
+        invent_code_hash = #{record.inventCodeHash,jdbcType=CHAR},
+      </if>
+      <if test="record.qrcode != null" >
+        qrcode = #{record.qrcode,jdbcType=BIGINT},
+      </if>
+      <if test="record.isRecommend != null" >
+        is_recommend = #{record.isRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDelete != null" >
+        is_delete = #{record.isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set user_id = #{record.userId,jdbcType=BIGINT},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      real_name = #{record.realName,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=INTEGER},
+      avatar = #{record.avatar,jdbcType=BIGINT},
+      id_number = #{record.idNumber,jdbcType=VARCHAR},
+      id_positive_pic = #{record.idPositivePic,jdbcType=BIGINT},
+      id_obverse_pic = #{record.idObversePic,jdbcType=BIGINT},
+      id_expire_time = #{record.idExpireTime,jdbcType=TIMESTAMP},
+      driver_license = #{record.driverLicense,jdbcType=BIGINT},
+      driver_license_duplication = #{record.driverLicenseDuplication,jdbcType=BIGINT},
+      driver_license_docno = #{record.driverLicenseDocno,jdbcType=VARCHAR},
+      driver_license_expire_time = #{record.driverLicenseExpireTime,jdbcType=TIMESTAMP},
+      is_own_vehicle = #{record.isOwnVehicle,jdbcType=INTEGER},
+      certification_status = #{record.certificationStatus,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=DECIMAL},
+      freeze_balance = #{record.freezeBalance,jdbcType=DECIMAL},
+      total_commission = #{record.totalCommission,jdbcType=DECIMAL},
+      invent_code_hash = #{record.inventCodeHash,jdbcType=CHAR},
+      qrcode = #{record.qrcode,jdbcType=BIGINT},
+      is_recommend = #{record.isRecommend,jdbcType=INTEGER},
+      source = #{record.source,jdbcType=INTEGER},
+      is_delete = #{record.isDelete,jdbcType=INTEGER},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="demo.entity.User" >
+    update user
+    <set >
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=BIGINT},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idPositivePic != null" >
+        id_positive_pic = #{idPositivePic,jdbcType=BIGINT},
+      </if>
+      <if test="idObversePic != null" >
+        id_obverse_pic = #{idObversePic,jdbcType=BIGINT},
+      </if>
+      <if test="idExpireTime != null" >
+        id_expire_time = #{idExpireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="driverLicense != null" >
+        driver_license = #{driverLicense,jdbcType=BIGINT},
+      </if>
+      <if test="driverLicenseDuplication != null" >
+        driver_license_duplication = #{driverLicenseDuplication,jdbcType=BIGINT},
+      </if>
+      <if test="driverLicenseDocno != null" >
+        driver_license_docno = #{driverLicenseDocno,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseExpireTime != null" >
+        driver_license_expire_time = #{driverLicenseExpireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOwnVehicle != null" >
+        is_own_vehicle = #{isOwnVehicle,jdbcType=INTEGER},
+      </if>
+      <if test="certificationStatus != null" >
+        certification_status = #{certificationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeBalance != null" >
+        freeze_balance = #{freezeBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCommission != null" >
+        total_commission = #{totalCommission,jdbcType=DECIMAL},
+      </if>
+      <if test="inventCodeHash != null" >
+        invent_code_hash = #{inventCodeHash,jdbcType=CHAR},
+      </if>
+      <if test="qrcode != null" >
+        qrcode = #{qrcode,jdbcType=BIGINT},
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend = #{isRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="demo.entity.User" >
+    update user
+    set mobile = #{mobile,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=BIGINT},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      id_positive_pic = #{idPositivePic,jdbcType=BIGINT},
+      id_obverse_pic = #{idObversePic,jdbcType=BIGINT},
+      id_expire_time = #{idExpireTime,jdbcType=TIMESTAMP},
+      driver_license = #{driverLicense,jdbcType=BIGINT},
+      driver_license_duplication = #{driverLicenseDuplication,jdbcType=BIGINT},
+      driver_license_docno = #{driverLicenseDocno,jdbcType=VARCHAR},
+      driver_license_expire_time = #{driverLicenseExpireTime,jdbcType=TIMESTAMP},
+      is_own_vehicle = #{isOwnVehicle,jdbcType=INTEGER},
+      certification_status = #{certificationStatus,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=DECIMAL},
+      freeze_balance = #{freezeBalance,jdbcType=DECIMAL},
+      total_commission = #{totalCommission,jdbcType=DECIMAL},
+      invent_code_hash = #{inventCodeHash,jdbcType=CHAR},
+      qrcode = #{qrcode,jdbcType=BIGINT},
+      is_recommend = #{isRecommend,jdbcType=INTEGER},
+      source = #{source,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>
